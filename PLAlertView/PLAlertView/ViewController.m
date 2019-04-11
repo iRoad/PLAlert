@@ -18,12 +18,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-}
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [super touchesBegan:touches withEvent:event];
     
-    [PLCustomAlertView alertWithType:PLCAlertTypeSuccess title:@"Title" cancelTitle:@"Yes" tapButtonHandler:nil];
+    self.view.backgroundColor = [UIColor redColor];
+}
+- (IBAction)buttonOnClick:(UIButton *)sender {
+    if (0 == sender.tag) {
+        [PLCustomAlertView alertWithType:PLCAlertTypeNormal title:@"Title" message:nil cancelTitle:@"Cancel" otherTitles:@[@"OK"] tapButtonHandler:^(NSInteger clickButtonIndex) {
+            NSLog(@"clickIDX:(%@)", @(clickButtonIndex));
+        }];
+    } else if (1 == sender.tag) {
+        [PLCustomAlertView alertWithType:PLCAlertTypeSuccess title:@"Title" message:@"message" cancelTitle:@"Cancel" otherTitles:@[@"First", @"Second"] tapButtonHandler:^(NSInteger clickButtonIndex) {
+            NSLog(@"clickIDX:(%@)", @(clickButtonIndex));
+        }];
+    } else if (2 == sender.tag) {
+        [PLCustomAlertView alertWithType:PLCAlertTypeFailure title:@"title" cancelTitle:nil tapButtonHandler:^(NSInteger clickButtonIndex) {
+            NSLog(@"clickIDX:(%@)", @(clickButtonIndex));
+        }];
+    } else if (3 == sender.tag) {
+        [PLCustomAlertView alertWithType:PLCAlertTypeNormal title:@"Title" message:@"message" cancelTitle:@"Cancel" otherTitles:nil tapButtonHandler:^(NSInteger clickButtonIndex) {
+            NSLog(@"clickIDX:(%@)", @(clickButtonIndex));
+        }];
+    } else if (4 == sender.tag) {
+        [PLCustomAlertView alertWithType:PLCAlertTypeNormal title:nil message:@"message" cancelTitle:@"Cancel" otherTitles:@[@"OK"] tapButtonHandler:^(NSInteger clickButtonIndex) {
+            NSLog(@"clickIDX:(%@)", @(clickButtonIndex));
+        }];
+    }
 }
 
 

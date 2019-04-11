@@ -31,7 +31,7 @@ typedef void (^PLCustomHandler)(NSInteger clickButtonIndex);
 
 /** alert with title, cancel title, other titles, tap idx, cancel idx = 0, other form 1 */
 + (instancetype)alertWithType:(PLCAlertType)type
-                        title:(NSString *)title
+                        title:(NSString * _Nullable)title
                       message:(NSString * _Nullable)message
                   cancelTitle:(NSString * _Nullable)cancelTitle
                   otherTitles:(NSArray * _Nullable)otherTitles

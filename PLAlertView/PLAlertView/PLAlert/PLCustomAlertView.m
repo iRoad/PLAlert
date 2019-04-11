@@ -76,7 +76,7 @@
 
 /** alert with title, cancel title, other titles, tap idx, cancel idx = 0, other form 1 */
 + (instancetype)alertWithType:(PLCAlertType)type
-                        title:(NSString *)title
+                        title:(NSString * _Nullable)title
                       message:(NSString * _Nullable)message
                   cancelTitle:(NSString * _Nullable)cancelTitle
                   otherTitles:(NSArray * _Nullable)otherTitles
@@ -147,15 +147,26 @@
         // 添加btn
         BOOL otherBtnFalg = self.otherTitles.count==0;
         
-        NSString *cTitle = self.cancelTitle.length>0?self.cancelTitle:@"取消";
-        [self.btnsView addSubview:[self btnWithTitle:cTitle highlight:otherBtnFalg tag:0]];
-        
         // others
-        if (self.otherTitles.count > 0) {
+        if (self.otherTitles.count > 1) {
+            [self.otherTitles enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [self.btnsView addSubview:[self btnWithTitle:obj highlight:YES tag:idx+1]];
+                [self.btnsView addSubview:[self lineView]];
+            }];
+            
+            NSString *cTitle = self.cancelTitle.length>0?self.cancelTitle:@"取消";
+            [self.btnsView addSubview:[self btnWithTitle:cTitle highlight:otherBtnFalg tag:0]];
+        } else if (self.otherTitles.count == 1) {
+            NSString *cTitle = self.cancelTitle.length>0?self.cancelTitle:@"取消";
+            [self.btnsView addSubview:[self btnWithTitle:cTitle highlight:otherBtnFalg tag:0]];
+            
             [self.otherTitles enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 [self.btnsView addSubview:[self lineView]];
                 [self.btnsView addSubview:[self btnWithTitle:obj highlight:YES tag:idx+1]];
             }];
+        } else {
+            NSString *cTitle = self.cancelTitle.length>0?self.cancelTitle:@"取消";
+            [self.btnsView addSubview:[self btnWithTitle:cTitle highlight:otherBtnFalg tag:0]];
         }
         
         
@@ -196,7 +207,7 @@
     
     self.contentView.transform = CGAffineTransformMakeScale(0.7, 0.7);
     [[UIApplication sharedApplication].keyWindow addSubview:self];
-    [UIView animateWithDuration:.25 animations:^{
+    [UIView animateWithDuration:.15 animations:^{
         self.contentView.transform = CGAffineTransformIdentity;
     }];
 }
@@ -251,9 +262,7 @@
         self.handler(sender.tag);
     }
     
-    if (0 == sender.tag) {
-        [PLCustomAlertView hideAlertView];
-    }
+    [PLCustomAlertView hideAlertView];
 }
 
 #pragma mark - getter
