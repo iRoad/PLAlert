@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "PLAlert/PLCustomAlertView.h"
 
 @interface ViewController ()
 
@@ -17,6 +18,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    
+    [PLCustomAlertView alertWithType:PLCAlertTypeSuccess title:@"Title" cancelTitle:@"Yes" tapButtonHandler:nil];
 }
 
 
